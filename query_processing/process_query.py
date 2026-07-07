@@ -1,4 +1,4 @@
-def process_query(dataset, configs)
+def process_query(dataset, configs):
     for config in configs:
         for ratio in config["ratios"]:    
             processed_dataset = dataset.map(
@@ -9,4 +9,4 @@ def process_query(dataset, configs)
                 batched=False
             )
             
-            processed_dataset.save_to_disk(f"datasets/{config['mapping'].__name__}/ratio_{str(ratio)}")
+            processed_dataset.save_to_disk(f"datasets/raw_datasets/{config['mapping'].__name__}/ratio_{str(ratio)}")

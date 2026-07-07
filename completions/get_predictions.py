@@ -3,7 +3,7 @@ from datasets import load_from_disk
 from datasets import Dataset
 from .process import process
 
-def get_predictions(base_dir, save_dir, process_fn): 
+async def get_predictions(base_dir, save_dir, process_fn): 
     for base_datasets in os.listdir(base_dir):
         base_datasets_path = f"{base_dir}/{base_datasets}"
         save_datasets_path = f"{save_dir}/{base_datasets}"
