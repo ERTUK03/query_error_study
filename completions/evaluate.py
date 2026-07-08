@@ -72,12 +72,21 @@ async def evaluate(i, example):
             "raw_judge": last_raw
         }
 
-    confidence = parsed.get("confidence")
+    label = parsed.get("label")
 
+    confidence = parsed.get("confidence")
+    try:
+        confidence = int(confidence)
+    except (TypeError, ValueError):
+        confidence = None
+    
+    reason = parsed.get("reason")
+    if reason is not None:
+        reason = str(reason)
+    
     needs_review = (
-        confidence is None or
-        not isinstance(confidence, (int, float)) or
-        confidence < 90
+        confidence is None
+        or confidence < 90
     )
 
     return {
@@ -85,9 +94,9 @@ async def evaluate(i, example):
         "query": query,
         "ground_truth": ground_truth,
         "prediction": prediction,
-        "judge_label": parsed.get("label"),
+        "judge_label": label,
         "confidence": confidence,
-        "reason": parsed.get("reason"),
+        "reason": reason,
         "needs_review": needs_review,
         "json_failed": False,
         "raw_judge": last_raw
